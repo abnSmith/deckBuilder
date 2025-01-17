@@ -1,0 +1,79 @@
+[gd_scene load_steps=10 format=3 uid="uid://mamo2tbetitn"]
+
+[ext_resource type="Script" path="res://_Scripts/card_mgr.gd" id="1_mempk"]
+[ext_resource type="Script" path="res://_Scripts/SceneMNGR.gd" id="1_xwm3l"]
+[ext_resource type="PackedScene" uid="uid://d2jrcqej2llaf" path="res://_Scenes/player_hand.tscn" id="2_5hxtf"]
+[ext_resource type="Script" path="res://_Scripts/deck.gd" id="3_ppvrm"]
+[ext_resource type="Texture2D" uid="uid://dormnwypetnx7" path="res://_Assets/tmpIMGs/deck.png" id="4_2jdyw"]
+[ext_resource type="Texture2D" uid="uid://dt6hx3w6vddlt" path="res://_Assets/tmpIMGs/deck_discard.png" id="6_qcq1e"]
+[ext_resource type="FontFile" uid="uid://dsqp4sqy2nvbt" path="res://_Assets/GuavineDemoRegular-1jGgL.otf" id="6_s1sks"]
+[ext_resource type="PackedScene" uid="uid://delm6gb32rybe" path="res://_Scenes/character.tscn" id="7_a8j1r"]
+[ext_resource type="Script" path="res://_Scripts/enemy_manager.gd" id="8_0ohnl"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_xwm3l")
+
+[node name="CardManager" type="Node2D" parent="."]
+script = ExtResource("1_mempk")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="BottomLeft_CNTRL" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 21.0
+offset_top = -375.0
+offset_right = 297.0
+offset_bottom = -24.0
+grow_vertical = 0
+
+[node name="Character" parent="CanvasLayer/BottomLeft_CNTRL" instance=ExtResource("7_a8j1r")]
+position = Vector2(77, 327)
+
+[node name="Deck" type="Node2D" parent="CanvasLayer/BottomLeft_CNTRL"]
+z_index = -2
+position = Vector2(174, 306)
+script = ExtResource("3_ppvrm")
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/BottomLeft_CNTRL/Deck"]
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("4_2jdyw")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/BottomLeft_CNTRL/Deck"]
+modulate = Color(1, 1, 0.866667, 1)
+offset_left = -15.0
+offset_top = -11.0
+offset_right = -3.0
+offset_bottom = 18.0
+theme_override_fonts/normal_font = ExtResource("6_s1sks")
+theme_override_font_sizes/normal_font_size = 13
+text = "0"
+
+[node name="PlayerHand" parent="CanvasLayer/BottomLeft_CNTRL" instance=ExtResource("2_5hxtf")]
+position = Vector2(0, 290)
+
+[node name="Discard" type="Node2D" parent="CanvasLayer"]
+z_index = -2
+position = Vector2(1067, 564)
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Discard"]
+texture = ExtResource("6_qcq1e")
+
+[node name="Count" type="RichTextLabel" parent="CanvasLayer/Discard"]
+modulate = Color(0, 0.027451, 0.329412, 1)
+offset_left = -58.0
+offset_top = 12.0
+offset_right = -18.0
+offset_bottom = 52.0
+scale = Vector2(2, 2)
+text = "0"
+
+[node name="EnemyManager" type="Node2D" parent="CanvasLayer"]
+script = ExtResource("8_0ohnl")
+
+[node name="startFightTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="startFightTimer" to="." method="_on_start_fight_timer_timeout"]

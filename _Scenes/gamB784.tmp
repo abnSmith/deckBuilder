@@ -1,0 +1,112 @@
+[gd_scene load_steps=12 format=3 uid="uid://mamo2tbetitn"]
+
+[ext_resource type="Script" path="res://_Scripts/card_mgr.gd" id="1_mempk"]
+[ext_resource type="Script" path="res://_Scripts/SceneMNGR.gd" id="1_xwm3l"]
+[ext_resource type="PackedScene" uid="uid://d2jrcqej2llaf" path="res://_Scenes/player_hand.tscn" id="2_5hxtf"]
+[ext_resource type="Script" path="res://_Scripts/deck.gd" id="3_ppvrm"]
+[ext_resource type="Texture2D" uid="uid://dormnwypetnx7" path="res://_Assets/tmpIMGs/deck.png" id="4_2jdyw"]
+[ext_resource type="Script" path="res://_Scripts/character.gd" id="6_frll1"]
+[ext_resource type="Texture2D" uid="uid://dt6hx3w6vddlt" path="res://_Assets/tmpIMGs/deck_discard.png" id="6_qcq1e"]
+[ext_resource type="Script" path="res://_Scripts/enemy_manager.gd" id="8_0ohnl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0kmyk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k86ba"]
+bg_color = Color(0.227451, 0.203922, 0.901961, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f61xi"]
+bg_color = Color(0.913725, 0, 0.184314, 1)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_xwm3l")
+
+[node name="CardManager" type="Node2D" parent="."]
+script = ExtResource("1_mempk")
+
+[node name="PlayerHand" parent="." instance=ExtResource("2_5hxtf")]
+
+[node name="Deck" type="Node2D" parent="."]
+z_index = -2
+position = Vector2(300, 890)
+script = ExtResource("3_ppvrm")
+
+[node name="Sprite2D" type="Sprite2D" parent="Deck"]
+texture = ExtResource("4_2jdyw")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Deck"]
+modulate = Color(0, 0.027451, 0.329412, 1)
+offset_left = 42.0
+offset_top = 12.0
+offset_right = 82.0
+offset_bottom = 52.0
+scale = Vector2(2, 2)
+text = "0"
+
+[node name="Discard" type="Node2D" parent="."]
+z_index = -2
+position = Vector2(800, 890)
+
+[node name="Sprite2D" type="Sprite2D" parent="Discard"]
+texture = ExtResource("6_qcq1e")
+
+[node name="Count" type="RichTextLabel" parent="Discard"]
+modulate = Color(0, 0.027451, 0.329412, 1)
+offset_left = -58.0
+offset_top = 12.0
+offset_right = -18.0
+offset_bottom = 52.0
+scale = Vector2(2, 2)
+text = "0"
+
+[node name="Character" type="Node2D" parent="."]
+script = ExtResource("6_frll1")
+
+[node name="Shield" type="ProgressBar" parent="Character"]
+offset_left = 427.0
+offset_top = 1038.0
+offset_right = 684.0
+offset_bottom = 1065.0
+theme_override_styles/background = SubResource("StyleBoxFlat_0kmyk")
+theme_override_styles/fill = SubResource("StyleBoxFlat_k86ba")
+show_percentage = false
+
+[node name="Shield_Lbl" type="RichTextLabel" parent="Character/Shield"]
+modulate = Color(0.282353, 0, 0, 1)
+offset_left = 121.0
+offset_top = 2.0
+offset_right = 242.0
+offset_bottom = 99.0
+text = "0
+"
+
+[node name="Health" type="ProgressBar" parent="Character"]
+offset_left = 427.0
+offset_top = 1002.0
+offset_right = 684.0
+offset_bottom = 1029.0
+theme_override_styles/background = SubResource("StyleBoxFlat_0kmyk")
+theme_override_styles/fill = SubResource("StyleBoxFlat_f61xi")
+value = 50.0
+show_percentage = false
+
+[node name="Health_Lbl" type="RichTextLabel" parent="Character/Health"]
+modulate = Color(0.282353, 0, 0, 1)
+offset_left = 110.0
+offset_top = 2.0
+offset_right = 231.0
+offset_bottom = 99.0
+text = "0/100"
+
+[node name="Timer" type="Timer" parent="Character"]
+wait_time = 5.0
+one_shot = true
+
+[node name="EnemyManager" type="Node2D" parent="."]
+script = ExtResource("8_0ohnl")
+
+[node name="startFightTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="timeout" from="Character/Timer" to="Character" method="_on_timer_timeout"]
+[connection signal="timeout" from="startFightTimer" to="." method="_on_start_fight_timer_timeout"]

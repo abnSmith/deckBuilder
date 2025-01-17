@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://dokgaqmif4r4u"]
+
+[ext_resource type="Script" path="res://_Scripts/enemy.gd" id="1_lhono"]
+[ext_resource type="Texture2D" uid="uid://crae1thk3iccr" path="res://_Assets/tmpIMGs/_tmpEnemy.png" id="2_dgfko"]
+[ext_resource type="PackedScene" uid="uid://trhi27w43x71" path="res://_Scenes/health_component.tscn" id="3_6o8yq"]
+
+[node name="Enemy" type="Node2D"]
+script = ExtResource("1_lhono")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("2_dgfko")
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_6o8yq")]
+position = Vector2(0, 161)
+maxHealth = 50

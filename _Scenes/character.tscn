@@ -1,0 +1,48 @@
+[gd_scene load_steps=6 format=3 uid="uid://delm6gb32rybe"]
+
+[ext_resource type="Script" path="res://_Scripts/character.gd" id="1_ph871"]
+[ext_resource type="Texture2D" uid="uid://bylx2whg502tv" path="res://_Assets/tmpIMGs/tmpCharacterBox.png" id="2_26q5y"]
+[ext_resource type="Texture2D" uid="uid://b3cys47tsrk24" path="res://_Assets/tmpIMGs/_tmpEnergyContainer.png" id="2_j8vws"]
+[ext_resource type="PackedScene" uid="uid://trhi27w43x71" path="res://_Scenes/health_component.tscn" id="2_sycxk"]
+[ext_resource type="PackedScene" uid="uid://cd0s657pjfpbq" path="res://_Scenes/shield_component.tscn" id="3_ov70f"]
+
+[node name="Character" type="Node2D"]
+script = ExtResource("1_ph871")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-2.38419e-07, -139)
+rotation = 0.0156522
+scale = Vector2(0.546667, 0.546667)
+texture = ExtResource("2_26q5y")
+
+[node name="EnergyContainer" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(-4, -280)
+scale = Vector2(0.546667, 0.546667)
+texture = ExtResource("2_j8vws")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="EnergyContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -133.333
+offset_top = -105.556
+offset_right = -16.3333
+offset_bottom = -24.5555
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+text = "[center]0[/center]"
+
+[node name="HealthComponent" parent="." instance=ExtResource("2_sycxk")]
+position = Vector2(-4, -3)
+scale = Vector2(0.57, 0.57)
+playerChar = true
+
+[node name="ShieldComponent" parent="." node_paths=PackedStringArray("healthComp") instance=ExtResource("3_ov70f")]
+position = Vector2(-4, 15)
+scale = Vector2(0.57, 0.57)
+healthComp = NodePath("../HealthComponent")

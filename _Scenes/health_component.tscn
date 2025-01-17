@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://trhi27w43x71"]
+
+[ext_resource type="Script" path="res://_Scripts/health_component.gd" id="1_g3ykl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mi2ij"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pqhve"]
+bg_color = Color(0.913725, 0, 0.184314, 1)
+
+[node name="HealthComponent" type="Node2D"]
+script = ExtResource("1_g3ykl")
+
+[node name="Health" type="ProgressBar" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.5
+offset_top = -13.5
+offset_right = 128.5
+offset_bottom = 13.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_mi2ij")
+theme_override_styles/fill = SubResource("StyleBoxFlat_pqhve")
+value = 50.0
+show_percentage = false
+
+[node name="Health_Lbl" type="RichTextLabel" parent="Health"]
+visible = false
+modulate = Color(0.282353, 0, 0, 1)
+layout_mode = 1
+offset_left = 107.5
+offset_top = 1.5
+offset_right = 228.5
+offset_bottom = 98.5
+text = "0/100"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
